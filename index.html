@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Grace ❤️</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .card {
+      max-width: 420px;
+      position: relative;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1>Hey Grace Giles ❤️</h1>
+    <p>I have one important question.</p>
+    <h2>Will you be my Valentine?</h2>
+
+    <button id="yesBtn" onclick="yes()">Yes</button>
+    <button id="noBtn" onmouseover="runAway()" onclick="runAway()">No</button>
+  </div>
+
+  <script>
+    let size = 1;
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    function runAway() {
+      size += 0.25;
+      yesBtn.style.transform = `scale(${size})`;
+
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    function yes() {
+      document.getElementById("card").innerHTML = `
+        <h1>It's a date 💘</h1>
+        <p><strong>📅 Date:</strong> February 13</p>
+        <p><strong>⏰ Time:</strong> 7:00 PM</p>
+        <p><strong>📍 Place:</strong> Allen Street Grill, State College, PA</p>
+        <p>Dress cute. I’ll handle the rest ❤️</p>
+      `;
+    }
+  </script>
+</body>
+</html>
