@@ -1,135 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>For Grace ❤️</title>
   <style>
     body {
-      font-family: Georgia, serif;
-      background: #fff0f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin: 0;
       height: 100vh;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-family: "Arial", sans-serif;
       overflow: hidden;
-      position: relative;
     }
-    .card {
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      max-width: 500px;
-      transition: transform 0.3s;
-      z-index: 10;
-      position: relative;
+
+    .screen {
+      display: none;
+      text-align: center;
     }
+
+    .active {
+      display: block;
+    }
+
     h1 {
-      font-size: 36px;
-      color: #d62828;
-      margin-bottom: 10px;
+      font-size: 3rem;
+      margin-bottom: 30px;
     }
-    h2 {
-      font-size: 28px;
-      margin: 20px 0;
-    }
-    p {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
+
     button {
-      margin: 10px;
+      font-size: 1.5rem;
       padding: 15px 30px;
-      font-size: 18px;
-      cursor: pointer;
       border: none;
-      border-radius: 10px;
-      background: #ff4d6d;
-      color: white;
+      border-radius: 12px;
+      cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
     }
-    button:hover {
-      filter: brightness(1.1);
+
+    #continueBtn {
+      background: #7c3aed;
+      color: white;
     }
+
+    #yesBtn {
+      background: #22c55e;
+      color: white;
+      margin-right: 20px;
+    }
+
     #noBtn {
-      background: #aaa;
-      color: #333;
-    }
-    .heart {
+      background: #ef4444;
+      color: white;
       position: absolute;
-      font-size: 20px;
-      color: purple;
-      animation: float 2s linear forwards;
-      user-select: none;
-      pointer-events: none;
     }
+
+    .heart {
+      position: fixed;
+      font-size: 2rem;
+      animation: float 3s linear forwards;
+    }
+
     @keyframes float {
-      0% {
+      from {
+        transform: translateY(0);
         opacity: 1;
-        transform: translateY(0) rotate(0deg);
       }
-      100% {
+      to {
+        transform: translateY(-600px);
         opacity: 0;
-        transform: translateY(-500px) rotate(360deg);
       }
     }
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <h1>Hey Grace ❤️</h1>
-    <p>I have one very important question for you…</p>
-    <h2>Will you be my Valentine?</h2>
 
-    <button id="yesBtn" onclick="yes()">Yes</button>
-    <button id="noBtn" onclick="no()">No</button>
+  <!-- Screen 1 -->
+  <div id="screen1" class="screen active">
+    <h1>Hey Grace ❤️<br>I have one very important question for you</h1>
+    <button id="continueBtn">Continue</button>
   </div>
 
-  <script>
-    let size = 1; // Yes button scale
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const card = document.getElementById("card");
+  <!-- Screen 2 -->
+  <div id="screen2" class="screen">
+    <h1>Will you be my Valentine?</h1>
+    <button id="yesBtn">Yes 💜</button>
+    <button id="noBtn">No</button>
+  </div>
 
-    function no() {
-      // Grow Yes button
-      size += 0.25;
-      yesBtn.style.transform = `scale(${size})`;
+  <!-- Screen 3 -->
+  <div id="screen3" class="screen">
+    <h1>💜 It’s a Date 💜</h1>
+    <p style="font-size: 1.8rem;">
+      Allen Street Grill<br>
+      State College, PA<br><br>
+      February 13<br><br>
+      I’m so excited to see you.<br>
+      I love you ❤️
+    </p>
+  </div>
 
-      // Make No button disappear
-      noBtn.style.display = "none";
-    }
+<script>
+  const screen1 = document.getElementById("screen1");
+  const screen2 = document.getElementById("screen2");
+  const screen3 = document.getElementById("screen3");
 
-    function yes() {
-      // Replace card content with date & place
-      card.innerHTML = `
-        <h1>It's a date 💘</h1>
-        <p><strong>📅 Date:</strong> February 13</p>
-        <p><strong>⏰ Time:</strong> 7:00 PM</p>
-        <p><strong>📍 Place:</strong> Allen Street Grill, State College, PA</p>
-        <p>I'm so excited to see you. I love you ❤️</p>
-      `;
+  const continueBtn = document.getElementById("continueBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
 
-      // Create purple hearts explosion
-      for (let i = 0; i < 50; i++) {
-        createHeart();
-      }
-    }
+  let yesScale = 1;
+  let noScale = 1;
 
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.textContent = '💜';
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+  continueBtn.onclick = () => {
+    screen1.classList.remove("active");
+    screen2.classList.add("active");
+    moveNoButton();
+  };
+
+  function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  noBtn.onclick = () => {
+    yesScale += 0.25;
+    noScale -= 0.15;
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+    noBtn.style.transform = `scale(${Math.max(noScale, 0.3)})`;
+
+    moveNoButton();
+  };
+
+  yesBtn.onclick = () => {
+    screen2.classList.remove("active");
+    screen3.classList.add("active");
+    explodeHearts();
+  };
+
+  function explodeHearts() {
+    for (let i = 0; i < 60; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💜";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 2000 + Math.random() * 1000);
+      setTimeout(() => heart.remove(), 3000);
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
